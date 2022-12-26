@@ -17,6 +17,7 @@
 
 package org.apache.skywalking.plugin.test.agent.tool.validator.assertor.element;
 
+import org.apache.skywalking.plugin.test.agent.tool.ConfigHelper;
 import org.apache.skywalking.plugin.test.agent.tool.validator.assertor.exception.ValueAssertFailedException;
 
 public class EqualsAssertor extends ElementAssertor {
@@ -27,8 +28,15 @@ public class EqualsAssertor extends ElementAssertor {
 
     @Override
     public void assertValue(String desc, String actualValue) {
-        if (!exceptedValue.equals(actualValue)) {
-            throw new ValueAssertFailedException(desc, exceptedValue, actualValue);
+        Boolean caseSensitive = ConfigHelper.caseSensitive();
+        if (caseSensitive) {
+            if (!exceptedValue.equals(actualValue)) {
+                throw new ValueAssertFailedException(desc, exceptedValue, actualValue);
+            }
+        } else {
+            if (!exceptedValue.equalsIgnoreCase(actualValue)) {
+                throw new ValueAssertFailedException(desc, exceptedValue, actualValue);
+            }
         }
     }
 }

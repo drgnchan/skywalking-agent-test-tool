@@ -29,4 +29,8 @@ public class ConfigHelper {
     public static String testCaseBaseDir() {
         return System.getProperty("testCasePath", "");
     }
+
+    public static Boolean caseSensitive() {
+        return Boolean.getBoolean("caseSensitive");
+    }
 }
